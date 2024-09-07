@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* Postlarning umumiy balandligini va tartibini belgilash */
+    .projects_item {
+        height: 350px; /* Har bir postning umumiy balandligi */
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* Rasmlarning o'lchami va proporsiyalarini moslashtirish */
+    .projects_item img {
+        height: 200px; /* Rasmning balandligi */
+        width: 100%;   /* Rasmning kengligi post kengligiga teng */
+        object-fit: cover; /* Rasmni blok ichida kesib, to'g'ri joylashtirish */
+    }
+
+    /* Matn va boshqa kontent joylashuvi */
+    .projects_text {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 15px;
+    }
+</style>
+
+	<!--================ Start portfolio Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-right">
+					<h1>My Portfolio</h1>
+					<div class="page_link">
+						<a href="{% url 'index-page' %}">Home</a>
+						<a href="{% url 'portfolio-page' %}">Portfolio</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Portfolio Banner Area =================-->
+
+	<!--================ Start Portfolio Area =================-->
+	<section class="section_gap portfolio_area" id="work">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="main-title">
+						<h1>My portfolio</h1>
+						<p>Hurmatli Kuzatuvchi, siz bu bo'limda mening portfoliolarim bilan tanishishingiz mumkin</p>
+					</div>
+				</div>
+			</div>
+			<div class="projects_inner row">
+				{% for item in portfolio_items %}
+				<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 d-flex align-items-stretch">
+					<div class="projects_item w-100">
+						<img class="img-fluid w-100" src="{{ item.image.url }}" alt="{{ item.title }}">
+						<div class="projects_text">
+							<a href="{% url 'portfolio_detail' item.pk %}">
+								<h4>{{ item.title }}</h4>
+							</a>
+							<p>{{ item.client }}</p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section><br><br><br><br><br><br><br>
+	<!--================ End Portfolio Area =================-->
+
+	{% endblock content %}

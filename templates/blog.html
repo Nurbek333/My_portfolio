@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    	<!--================Home Banner Area =================-->
+	<section class="banner-area owl-carousel" id="home">
+		<div class="single_slide_banner slide_bg1">
+			<div class="container">
+				<div class="row fullscreen d-flex align-items-center">
+					<div class="banner-content col-lg-12 justify-content-center">
+						<h1>Nurbek Uktamov</h1>
+						<h3>Shaxsiy portfolio veb-sayti</h3>
+						<a href="https://github.com/Nurbek333/" class="primary-btn">GitHub</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Home Banner Area =================-->
+<br>
+
+    <!--================Blog Area =================-->
+    <section class="blog_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="blog_left_sidebar">
+                        {% for post in page_obj %}
+                        <article class="row blog_item">
+                            <div class="col-md-3">
+                                <div class="blog_info text-right">
+                                    <ul class="blog_meta list">
+                                        <li><a href="#">{{ post.author.username }}<i class="lnr lnr-user"></i></a></li>
+                                        <li><a href="#">{{ post.created_at|date:"d M, Y" }}<i class="lnr lnr-calendar-full"></i></a></li>
+                                        <li><a href="#">{{ post.views }} Views<i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#">{{ post.comments.count }} Comments<i class="lnr lnr-bubble"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="blog_post">
+                                    <img src="{{ post.featured_image.url }}" alt="Image of {{ post.title }}">
+                                    <div class="blog_details">
+                                        <a href="{% url 'post_detail' post.slug %}">
+                                            <h2>{{ post.title }}</h2>
+                                        </a>
+                                        <p>{{ post.content|slice:":200" }}...</p>
+                                        <a href="{% url 'post_detail' post.slug %}" class="primary_btn">View More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+                        <br>
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="?page=1" class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-left"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-left"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-left"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                    
+                                {% for num in page_obj.paginator.page_range %}
+                                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                        <a href="?page={{ num }}" class="page-link">{{ num|slice:":02" }}</a>
+                                    </li>
+                                {% endfor %}
+                    
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-right"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-right"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-right"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+
+    {% endblock content %}

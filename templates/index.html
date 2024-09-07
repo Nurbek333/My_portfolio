@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* Postlarning umumiy balandligini va tartibini belgilash */
+    .projects_item {
+        height: 350px; /* Har bir postning umumiy balandligi */
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* Rasmlarning o'lchami va proporsiyalarini moslashtirish */
+    .projects_item img {
+        height: 200px; /* Rasmning balandligi */
+        width: 100%;   /* Rasmning kengligi post kengligiga teng */
+        object-fit: cover; /* Rasmni blok ichida kesib, to'g'ri joylashtirish */
+    }
+
+    /* Matn va boshqa kontent joylashuvi */
+    .projects_text {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 15px;
+    }
+</style>
+
+	<!--================Home Banner Area =================-->
+	<section class="banner-area owl-carousel" id="home">
+		<div class="single_slide_banner slide_bg1">
+			<div class="container">
+				<div class="row fullscreen d-flex align-items-center">
+					<div class="banner-content col-lg-12 justify-content-center">
+						<h1>Nurbek Uktamov</h1>
+						<h3>Shaxsiy portfolio veb-sayti</h3>
+						<a href="https://github.com/Nurbek333/" class="primary-btn">GitHub</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Home Banner Area =================-->
+
+	<!--================ Start Portfolio Area =================-->
+	<section class="section_gap portfolio_area" id="work">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="main-title">
+						<h1>My portfolio</h1>
+						<p>Hurmatli Kuzatuvchi, siz bu bo'limda mening portfoliolarim bilan tanishishingiz mumkin</p>
+					</div>
+				</div>
+			</div>
+			<div class="projects_inner row">
+				{% for item in portfolio_items %}
+				<div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 d-flex align-items-stretch">
+					<div class="projects_item w-100">
+						<img class="img-fluid w-100" src="{{ item.image.url }}" alt="{{ item.title }}">
+						<div class="projects_text">
+							<a href="{% url 'portfolio_detail' item.pk %}">
+								<h4>{{ item.title }}</h4>
+							</a>
+							<p>{{ item.client }}</p>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section><br><br><br><br><br><br><br>
+	<!--================ End Portfolio Area =================-->
+
+	<!--================ Start About Area =================-->
+	<section class="about-area section_gap gray-bg">
+		<div class="container">
+			<div class="row align-items-center justify-content-between">
+				<div class="col-lg-5 about-left">
+					<img class="img-fluid" src="{{ about_section.image.url }}" alt="">
+				</div>
+				<div class="col-lg-6 col-md-12 about-right">
+					<div class="main-title text-left">
+						<h1>{{ about_section.title }}</h1>
+					</div>
+					<div class="mb-50 wow fadeIn" data-wow-duration=".8s">
+						<p>{{ about_section.content|slice:":500" }}.....</p>
+						<p>{{ about_section.additional_content|slice:":0" }}</p>
+					</div>
+					<a href="{% url 'about_us-page' %}" class="primary-btn">Ko'proq</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End About Area =================-->
+
+	<!--================ Start Testimonial Area =================-->
+	<div class="section_gap testimonial_area">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-7 text-left">
+					<div class="active_testimonial owl-carousel" data-slider-id="1">
+						<!-- single testimonial -->
+						<div class="single_testimonial">
+							<div class="testimonial_head">
+								<img src="{% static 'img/quote.png' %}" alt="">
+								<h4>Bjarne Stroustrup</h4>
+							</div>
+							<div class="testimonial_content">
+								<p>Har bir katta loyiha – bu kichikroq va boshqariladigan vazifalarga bo'lingan majmuadir.</p>
+							</div>
+						</div>
+
+						<div class="single_testimonial">
+							<div class="testimonial_head">
+								<img src="{% static 'img/quote.png' %}" alt="">
+								<h4>Donald Knuth</h4>
+							</div>
+							<div class="testimonial_content">
+								<p>Dasturiy ta'minot – bu qog'ozda yozilgan bir qator buyruqlar emas, balki ular qanday ishlashini ko'rsatadigan vaqt davomida rivojlanadigan strukturalar.</p>
+							</div>
+						</div>
+
+						<div class="single_testimonial">
+							<div class="testimonial_head">
+								<img src="{% static 'img/quote.png' %}" alt="">
+								<h4>Soren Kierkegaard</h4>
+							</div>
+							<div class="testimonial_content">
+								<p>Agar siz kod yozayotganingizda xatolar qilmasangiz, demak siz yangi narsalarni sinab ko'rmaysiz.</p>
+							</div>
+						</div>
+
+						<div class="single_testimonial">
+							<div class="testimonial_head">
+								<img src="{% static 'img/quote.png' %}" alt="">
+								<h4>Grady Booch</h4>
+							</div>
+							<div class="testimonial_content">
+								<p>Dastur yaratishda asosiy vazifa – bu o'zingizni qanday qilib takrorlashingizni o'rganishdir.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 offset-lg-1">
+					<div class="testimonial_logos">
+						<div class="top_logos">
+							<img src="{% static 'img/brands/logo1.png' %}" alt="">
+							<img src="{% static 'img/brands/logo2.png' %}" alt="">
+						</div>
+						<div class="mid_logo">
+							<img src="{% static 'img/brands/logo3.png' %}" alt="">
+						</div>
+						<div class="bottom_logos jus">
+							<img src="{% static 'img/brands/logo4.png' %}" alt="">
+							<img src="{% static 'img/brands/logo5.png' %}" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================ End Testimonial Area =================-->
+
+	<!--================ Start Newsletter Area =================-->
+	<section class="section_gap newsletter-area">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="main-title">
+						<h1>Join Our Newsletter</h1>
+						<p>If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may
+							see some for as low as $.17 each.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row newsletter_form justify-content-center">
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="d-flex flex-row" id="mc_embed_signup">
+						<form class="w-100" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+						 method="get">
+							<div class="navbar-form">
+								<div class="input-group add-on">
+									<input class="form-control" name="EMAIL" placeholder="Your email address" onfocus="this.placeholder = ''"
+									 onblur="this.placeholder = 'Your email address'" required="" type="email">
+									<div style="position: absolute; left: -5000px;">
+										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+									</div>
+									<div class="input-group-btn">
+										<button class="genric-btn text-uppercase">
+											Subscribe
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="info mt-20"></div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Newsletter Area =================-->
+
+	{% endblock content %}

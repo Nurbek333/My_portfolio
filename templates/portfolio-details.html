@@ -1,0 +1,71 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* Rasmning kattaligini oshirish uchun max-width va max-height belgilanadi */
+    .left_img img {
+        width: 100%; /* Kenglikni to'liq qamrab olish */
+        height: 360px; /* Rasmning maksimal balandligi */ /* Rasmni kesmasdan joylashtirish */
+    }
+
+    /* Mobil ekranlar uchun ham moslashuv */
+    @media (max-width: 768px) {
+        .left_img img {
+            max-height: 400px; /* Kichik ekranlar uchun balandlikni moslashtirish */
+        }
+    }
+</style>
+
+	<!--================ Start portfolio Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-right">
+					<h1>{{ item.title }} Haqida</h1>
+					<div class="page_link">
+						<a href="{% url 'index-page' %}">Home</a>
+						<a href="{% url 'portfolio-page' %}">Portfolio</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Portfolio Banner Area =================-->
+
+	<!--================ Start Portfolio Details Area =================-->
+	<section class="portfolio_details_area section_gap">
+		<div class="container">
+			<div class="portfolio_details_inner">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="left_img">
+							<img class="img-fluid" src="{{ item.detail_image.url }}" alt="{{ item.title }}">
+						</div>
+					</div>
+					<div class="offset-md-1 col-md-5">
+						<div class="portfolio_right_text mt-30">
+							<h4>{{ item.title }}</h4>
+							<p>{{ item.description }}</p>
+							<ul class="list">
+								<li><span>Kirish</span>: {{ item.client }}</li>
+								<li><span>Website</span>: <a href="{{ item.website }}">{{ item.website }}</a></li>
+								<li><span>Sana</span>: {{ item.completed_date }}</li>
+							</ul>
+							<ul class="list social_details">
+								{% for platform, url in item.social_links.items %}
+									<li><a href="{{ url }}"><i class="fa fa-{{ platform }}"></i></a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+				<p>{{ item.description }}</p>
+			</div>
+		</div>
+	</section>
+	<!--================ Start Portfolio Details Area =================-->
+
+	{% endblock content %}
